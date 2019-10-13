@@ -3,9 +3,9 @@ require 'time'
 class BloodOath
     attr_reader :initiation_date, :follower, :age
     @@all = []
-    
+
     def initialize(follower,cult)
-        
+
         if cult.minimum_age && follower.age < cult.minimum_age
             puts "Sorry! You're too young to join this cult"
         else
@@ -13,8 +13,6 @@ class BloodOath
             @cult = cult
             @initiation_date = "#{Time.now.year}-#{Time.now.month}-#{Time.now.day}"
             @@all << self
-            cult.followers << follower
-            follower.cults << cult
         end
     end
 
