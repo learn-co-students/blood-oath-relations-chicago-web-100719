@@ -13,9 +13,12 @@ class Cult
         @@all << self
     end
 
-    def followers
+    def blood_oaths
       BloodOath.all.collect{|b| b.cult == self}
     end
+
+    def followers
+      self.blood_oaths.map {|b| b.follower}
 
     def recruit_follower(new_follower)
         BloodOath.new(new_follower, self)
