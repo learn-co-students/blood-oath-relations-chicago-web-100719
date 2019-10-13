@@ -1,17 +1,20 @@
 class Cult
     attr_accessor :minimum_age
-    attr_reader :name, :location, :founding_year, :slogan, :followers
+    attr_reader :name, :location, :founding_year, :slogan
 
     @@all = []
-    
-    
+
+
     def initialize(name, location, founding_year, slogan)
         @name = name
         @location = location
         @founding_year = founding_year
         @slogan = slogan
-        @followers = []
         @@all << self
+    end
+
+    def followers
+      BloodOath.all.collect{|b| b.cult == self}
     end
 
     def recruit_follower(new_follower)
@@ -33,7 +36,7 @@ class Cult
     def self.find_by_location(location)
         self.all.find {|c| c.location == location}
     end
-    
+
     def self.find_by_founding_year(year)
         self.all.find {|c| c.founding_year == year}
     end
@@ -49,7 +52,7 @@ class Cult
     def self.least_popular
         self.all.min {|a,b| a.followers.length <=> b.followers.length}
     end
-    
+
     def self.cult_locations
         locations = {}
         self.all.each do |cult|
@@ -59,10 +62,10 @@ class Cult
                 locations[cult.location] += 1
             end
         end
-        
+
         locations
     end
-    
+
     def self.most_common_location
         location = self.cult_locations.max_by {|location, count| count}[0]
     end
