@@ -1,6 +1,6 @@
 class Cult
     attr_reader :name, :location, :slogan, :founding_year
-
+    attr_accessor :minimum_age
     @@all = []
 
     def initialize(name, location, founding_year, slogan)
@@ -8,6 +8,7 @@ class Cult
         @location = location
         @founding_year = founding_year
         @slogan = slogan
+        @minimum_age = 0
         self.class.all << self
     end
 
@@ -17,7 +18,10 @@ class Cult
 
     def recruit_follower(follower)
         # create new blood oath with this cult instance 
-        BloodOath.new(self, follower, Date.today)
+        if follower.age >= self.minimum_age
+            BloodOath.new(self, follower, Date.today)
+        else puts "sorry maybe next year"
+        end
     end
 
     def cult_population
@@ -72,4 +76,5 @@ class Cult
         # iterating location to see which in the hash corresponds to the highest value
         location_array.max_by { |el| freq[el] }
     end
+
 end

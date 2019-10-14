@@ -36,6 +36,8 @@ mom.join_cult(j_for_j)
 anna.join_cult(koolaid)
 hope.join_cult(j_for_j)
 ryan.join_cult(j_for_j)
+trish = Follower.new("Trish", 16, "go wildcats")
+j_for_j.minimum_age = 17
 binding.pry
 
 puts "Mwahahaha!" # just in case pry is buggy and exits

@@ -20,7 +20,10 @@ class Follower
     end
 
     def join_cult(cult)
-        BloodOath.new(cult, self, Date.today)
+        if self.age >= cult.minimum_age
+            BloodOath.new(cult, self, Date.today)
+        else puts "sorry maybe next year"
+        end
     end
 
     def self.of_a_certain_age(age)
@@ -44,5 +47,16 @@ class Follower
 
     def self.top_ten
         self.most_to_least_cults[0..9]
+    end
+
+    def fellow_cult_members
+        # pull blood oaths of cults that they're in
+        blood_oaths = BloodOath.all.select { |b| self.cults.include?(b.cult) }
+        # collect the unique followers out of the blood oath array
+        followers_including_you = blood_oaths.collect { |b| b.follower }.uniq 
+        # remove yourself from the array
+        followers_including_you.delete(self)
+        # return array without you
+        followers_including_you
     end
 end
